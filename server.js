@@ -1,35 +1,27 @@
+const express = require('express') ;
+const app = express();
 
-const http = require("http");
-
-const notes = [
+let notes = [
     {
-        id:1, 
-        content:"Backend using node.js",
+        id:1,
+        content:"simple web server using node.js",
         important:true 
     },
     {
         id:2,
-        content:"node.js is a open source",
-        important:false 
-    },
-    {
-        id:3,
-        content:"simple web server using node.js",
-        important:true
+        content:"express makes backend restful painless",
+        important : false 
     }
 ];
 
-const hostName = "127.0.0.1";
+app.get('/',(request, response)=>{
+    response.send("Hello World welcome to Node js");
+})
+
+//define the server hostName and port Number 
+const hostName = "127.0.0.1" ;
 const port = 3001 ;
 
-const server = http.createServer((req,res)=>{
-    res.statusCode = 200 ;
-    res.setHeader("Content-Type", "text/plain");
-    res.end(JSON.stringify(notes));
-
-}) ;
-
-server.listen(port, hostName, ()=>{
-    console.log(`Server running at port http://${hostName}:${port}`);
+app.listen(port, hostName, ()=>{
+    console.log(`Server running at http://${hostName}:${port}`) ;
 });
-

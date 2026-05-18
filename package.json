@@ -1,7 +1,7 @@
 {
   "name": "node",
   "version": "1.0.0",
-  "description": "simple application",
+  "description": "simple",
   "homepage": "https://github.com/vinoth9598/Node_js-#readme",
   "bugs": {
     "url": "https://github.com/vinoth9598/Node_js-/issues"
@@ -13,9 +13,11 @@
   "license": "ISC",
   "author": "vinoth",
   "type": "commonjs",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
   }
 }
