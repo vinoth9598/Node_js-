@@ -1,27 +1,35 @@
-const express = require('express') ;
-const app = express();
+const express = require("express") ;
+const app = express() ;
 
 let notes = [
     {
         id:1,
-        content:"simple web server using node.js",
+        content:"Backend using node.js",
         important:true 
     },
     {
         id:2,
-        content:"express makes backend restful painless",
-        important : false 
+        content : "Node js is a open source",
+        important:false 
+    },
+    {
+        id:3,
+        content : "simple web server using node.js",
+        important:true 
     }
 ];
 
-app.get('/',(request, response)=>{
-    response.send("Hello World welcome to Node js");
+app.get('/',(req,res)=>{
+    res.send("Hello welcome to js");
 })
 
-//define the server hostName and port Number 
-const hostName = "127.0.0.1" ;
+app.get("/notes",(req, res)=>{
+    res.send(JSON.stringify(notes));
+})
+
+const hostName = "localhost" ;
 const port = 3001 ;
 
-app.listen(port, hostName, ()=>{
+app.listen(port, () =>{
     console.log(`Server running at http://${hostName}:${port}`) ;
-});
+}) ;
