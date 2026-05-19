@@ -1,35 +1,42 @@
 
-const http = require("http");
+const express = require('express') ;
+const app = express() ;
+const cors = require('cors') ;
+const mongoose = require('mongoose') ;
+const config = require('./utils/config') ;
 
-const notes = [
-    {
-        id:1, 
-        content:"Backend using node.js",
-        important:true 
-    },
-    {
-        id:2,
-        content:"node.js is a open source",
-        important:false 
-    },
-    {
-        id:3,
-        content:"simple web server using node.js",
-        important:true
-    }
-];
 
-const hostName = "127.0.0.1";
-const port = 3001 ;
+//middleware 
+app.use(express.json());
+app.use(cors()) ;
 
-const server = http.createServer((req,res)=>{
-    res.statusCode = 200 ;
-    res.setHeader("Content-Type", "text/plain");
-    res.end(JSON.stringify(notes));
+mongoose.connect(config.MongoDb_URI)
+    .then(() =>{
+        console.log("Connected to MongoDB,...");
+    })
+    .catch((err)=>{
+        console.log("Error connecting to MongoDB :", err)
+    }) ;
 
-}) ;
 
-server.listen(port, hostName, ()=>{
-    console.log(`Server running at port http://${hostName}:${port}`);
+//define a schema 
+const noteSchema = new mongoose.Schema({
+    id: Number,
+    content :String ,
+    important : Boolean 
+});
+ 
+//create a model 
+const Note = mongoose.model("Note", noteSchema, 'notes') ;
+
+//endpoint to view all the notes 
+app.get('/notes', (request, response)=>{
+    Note.find({}, {})
+        .then(notes => {
+            response.status(200).json(notes) ;
+        })
 });
 
+app.listen(config.Port, () =>{
+    console.log(`Server running at port ${config.Port}`) ;
+})
